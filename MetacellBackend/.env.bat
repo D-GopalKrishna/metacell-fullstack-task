@@ -1,0 +1,1 @@
+set SECRET_KEY=django-insecure-kx%f*lz0%w0xg_fn35r1_tnma_lrcus0sgj_f!#%=1slmjcp-v

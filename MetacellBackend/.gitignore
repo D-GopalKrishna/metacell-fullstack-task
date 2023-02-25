@@ -1,0 +1,29 @@
+env
+.env
+.env.dev
+.env.prod
+env.bat
+env.dev.bat
+env.prod.bat
+.bash_profile
+
+
+## VSCODE
+.vscode/* 
+
+
+
+/data 
+
+## Django ##
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media
+
+
+## No migration files because - Django recommends including migration files as they are part of the code base.
