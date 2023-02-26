@@ -8,6 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from .auth_serializers import LoginSerializer, RegistrationSerializer
 from .models import User
+from django.http import HttpResponse
 
 
 class LoginViewSet(ModelViewSet, TokenObtainPairView):

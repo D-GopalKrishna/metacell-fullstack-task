@@ -14,6 +14,7 @@ class AddBookSerializer(serializers.ModelSerializer):
         model = Book
         fields = ['title', 'author', 'description', 'price']
 
+
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note

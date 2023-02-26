@@ -16,3 +16,17 @@ Frontend - metacell-frontend
 
 
 ## metacell-frontend
+
+
+## Way to run the application
+First run the backend code. 
+Then run the frontend code.
+
+## Backend
+- Create a virtual environment
+- Install the requirements
+- Run the server
+
+## Frontend
+- Install the requirements
+- Run the server

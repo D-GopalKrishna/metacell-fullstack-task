@@ -1,21 +1,21 @@
 import React, {useState, useEffect} from 'react'
-import BookCard from './components/BookCard'
 import Navbar from './components/Navbar'
+import { useNavigate } from "react-router-dom";
 
-const Home = () => {
-    const [books, setBooks] = useState<any[]>([])
+type Props = {
+
+}
+
+const Home: React.FC<Props>= () => {
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate();
 
-        useEffect(() => {
-        // fetch('http://localhost:5000/books')
-        let data: any = {
-            "uuid": '123',
-            "title": 'The Alchemist',
-            "author": 'Paulo Coelho',
-            "description": 'I created a new ReactJS app and corded it as below. It doesn\'t work. I need const person call into const app, How to do that?',
-        }
-        setBooks([data, data, data, data, data, data])
+    useEffect(() => {
         setLoading(false)
+        if (localStorage.getItem('token')){
+            console.log("asdf")
+            navigate('books')
+        }
     }, [])
 
     return (
@@ -24,21 +24,13 @@ const Home = () => {
             {
                 loading ? <h1>Loading...</h1> : (
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-100 mx-28 mb-10">Metacell Library</h2>
-                        <div className='grid grid-cols-2 mx-24 mb-20'>
-                            {
-                                books.map((book: any) => {
-                                    return (
-                                        <BookCard
-                                            key={book.uuid}
-                                            title={book.title}
-                                            author={book.author}
-                                            description={book.description}
-                                            uuid={book.uuid}
-                                        />
-                                    )
-                                })
-                            }   
+                        <div className='flex flex-col items-center mt-36'>
+                            <h2 className="text-2xl font-bold text-gray-100 mx-28 mb-10">Welcome to Metacell Book Library</h2>
+                            <div className='mx-24 mb-20 w-2/5'>
+                                <p className="resize-none bg-gray-900 text-gray-100 rounded-lg border-2 border-gray-900 focus:outline-none focus:border-gray-500 px-4 py-2 mb-5">This is a simple book library application. You can add books to the library, edit and delete them. You can also search for books by title or author.</p>
+                                <p className="resize-none bg-gray-900 text-gray-100 rounded-lg border-2 border-gray-900 focus:outline-none focus:border-gray-500 px-4 py-2 mb-5">To access the library, please login or register.</p>
+                                <p className="resize-none bg-gray-900 text-gray-100 rounded-lg border-2 border-gray-900 focus:outline-none focus:border-gray-500 px-4 py-2 mb-5">To access the admin panel, please login with the admin credentials. Here is the django-admin panel for you to go to - <a href='http://localhost:8000/' className="text-blue-500">Backend Link</a></p>
+                            </div>
                         </div>
                     </div>
                 )

@@ -30,11 +30,14 @@ def GetBooksCatalogue(request):
         )
 
 
+## Get the book details
 @api_view(['GET'])
 def GetBookDetails(request, book_id):
     try:
         book = Book.objects.get(uuid=book_id)
         token = request.META.get('HTTP_AUTHORIZATION', " ")
+        if token.split()[0] == 'Bearer':
+            token = token.split()[1]
         if token == " " or token == "" or token == None: 
             return Response(
                 {"message": "Token not found"},
@@ -78,7 +81,7 @@ def GetBookDetails(request, book_id):
         )
     
 
-
+## Add a new book to the catalogue
 @swagger_auto_schema(
     method='post',
     request_body=openapi.Schema(
@@ -136,7 +139,7 @@ def AddBook(request):
         )
 
 
-
+## Add a note to this book
 @swagger_auto_schema(
     method='post',
     request_body=openapi.Schema(
@@ -183,11 +186,13 @@ def AddNoteOnBook(request):
         )
 
 
-
+## Get notes for this book
 @api_view(['GET'])
 def GetNotesOnBook(request, book_id):
     try:
         token = request.META.get('HTTP_AUTHORIZATION', " ")
+        if token.split()[0] == 'Bearer':
+            token = token.split()[1]
         if token == " " or token == "" or token == None: 
             return Response(
                 {"message": "Token not found"},
@@ -211,6 +216,7 @@ def GetNotesOnBook(request, book_id):
         )
 
 
+## Add a rating to this book
 @swagger_auto_schema(
     method='post',
     request_body=openapi.Schema(

@@ -10,7 +10,6 @@ type Props = {
 const BookCard: React.FC<Props> = ({
     title, author, description, uuid
 }) => {
-    console.log(title, author, description, uuid)
     return (
         <div className="bg-purple mx-5 my-5">
             <div className="bg-gray-900 shadow-lg rounded-lg overflow-hidden">
@@ -20,7 +19,7 @@ const BookCard: React.FC<Props> = ({
                     <p className="text-gray-100 text-base">{description}</p>
                 </div>
                 <div className="px-6 pt-2 pb-5">
-                    <Link to={uuid ? uuid : ''} >
+                    <Link to={ uuid ? `/${uuid}` : ''} >
                         <button className="bg-violet-900 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded">Read more</button>
                     </Link>
                 </div>

@@ -1,15 +1,24 @@
+import IndividualBookAPI from './IndividualBookAPI'
 
 const AddRatingAPI = async (
-    baseURL: string,
+    REACT_APP_BACKEND_URI: string,
     token: string,
-    setCurrentBalance: any,
-    setArt: any,
+    ratings: any,
+    comment: any,
+    book_id: string,
+    user_id: string,
+    setBookInfo: any,
+    setNewComment: any,
 ) => {
     let itemBody = {
-        "itemid": 1,
+        "rating": ratings,
+        "comment": comment,
+        "book_id": book_id,
+        "user_id": user_id
     }
+    console.log("AddRatingAPI -> itemBody", user_id, book_id, comment, ratings)
     try {
-        let response = await fetch(baseURL + '/buy', {
+        let response = await fetch(REACT_APP_BACKEND_URI + '/book/add_rating', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -19,9 +28,10 @@ const AddRatingAPI = async (
         });
         let data = await response.json();
         console.log("AddRatingAPI -> data", data)
-        setCurrentBalance(data.balance);
+        IndividualBookAPI(REACT_APP_BACKEND_URI, token, book_id, setBookInfo)
+        setNewComment("")
     } catch (err) {
-        console.log("ErrorEarthArt  -> ", err);
+        console.log("AddRatingAPI Error  -> ", err);
     }
 }
 

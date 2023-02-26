@@ -3,41 +3,53 @@ import { useParams } from 'react-router-dom'
 import Ratings from './components/Ratings'
 import MyNotes from './components/MyNotes'
 import Navbar from './components/Navbar'
+import IndividualBookAPI from './api/IndividualBookAPI'
+import { useSelector, } from 'react-redux'; 
 
+type Props = {
+    REACT_APP_BACKEND_URI: string,
+}
 
-const IndividualBook = () => {
+const IndividualBook: React.FC<Props>= ({
+    REACT_APP_BACKEND_URI,
+}) => {
     const [loading, setLoading] = React.useState(true)
-    const { uuid } = useParams<{ uuid: string }>()
+    const { bookid } = useParams()
     const [bookInfo, setBookInfo] = React.useState<any>({})
-
+    const token = useSelector((state: any) => state?.userInformationStore?.token)
     React.useEffect(() => {
-        let data: any = {
-            "uuid": uuid,
-            "title": 'The Alchemist',
-            "author": 'Paulo Coelho',
-            "description": 'I created a new ReactJS app and corded it as below. It doesn\'t work. I need const person call into const app, How to do that?',
+        console.log("Uuid: ", bookid, setBookInfo)
+        if (bookid && token) {
+            IndividualBookAPI(REACT_APP_BACKEND_URI, token, bookid, setBookInfo)
         }
-        setBookInfo(data)
         setLoading(!loading)
-    }, [])
-
+    }, [token, bookid])
     return (
         <div>
             <Navbar />
             <div className="mx-32 my-5">
                 <div className="shadow-lg rounded-lg overflow-hidden mb-10">
                     <div className="">
-                        <h1 className="font-bold text-xl mb-1 text-gray-400">{bookInfo.title}</h1>
-                        <p className="text-gray-100 text-base mb-8">Author: {bookInfo.author}</p>
-                        <p className="text-gray-100 text-base">{bookInfo.description}</p>
+                        <h1 className="font-bold text-xl mb-1 text-gray-400">{bookInfo?.book?.title}</h1>
+                        <p className="text-gray-100 text-base mb-1">Author: {bookInfo?.book?.author}</p>
+                        <p className="text-gray-100 text-base mb-1">Price: {bookInfo?.book?.price}</p>
+                        <p className="text-gray-100 text-base">Summary: {bookInfo?.book?.description}</p>
                     </div>
                 </div>
                 <MyNotes
-                    bookname={'bookname'}
-                    notes={'notes'}
+                    bookname={bookInfo?.book?.title}
+                    notes={bookInfo?.my_book_notes?.length>0 ? bookInfo?.my_book_notes[bookInfo?.my_book_notes?.length - 1]?.note : ''}
+                    REACT_APP_BACKEND_URI={REACT_APP_BACKEND_URI}
+                    token={token}
+                    book_id={bookid ? bookid : ''}
+                    setBookInfo={setBookInfo}
                 />
                 <Ratings
-                    commentInfo={'commentInfo'}
+                    commentInfo={bookInfo?.rating_obj}
+                    REACT_APP_BACKEND_URI={REACT_APP_BACKEND_URI}
+                    token={token}
+                    book_id={bookid ? bookid : ''}
+                    setBookInfo={setBookInfo}
                 />
             </div>
 
